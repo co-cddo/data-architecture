@@ -1,13 +1,9 @@
 @startuml dm-c4-container 
-!include <azure/AzureCommon>
-!include <azure/Web/AzureWebApp>
-!include <azure/Databases/AzureSqlDatabase>
-!include <azure/Storage/AzureBlobStorage>
 !include <C4/C4_Container>
 !include <C4/C4_Component>
 
-  title Container diagram for Data Marketplace
-
+  title C4 Container diagram for Data Marketplace
+  
   AddRelTag("dashed", $lineStyle=DashedLine())
 
   Person(acquirer, "Acquirer", "")
@@ -18,14 +14,22 @@
 
   Container_Ext(idp, "Identity provider", "")
 
-  Boundary(dm, "Data Marketplace") {
+  System_Boundary(dm, "Data Marketplace") {
   
     Container(am, "Access management", "")
-      Container(discover, "Discover", "")
-      Container(share, "Share", "")
-      Container(access, "Access", "") 
-      Container(learn, "Learn", "") 
-      SystemDb(catalog, "Data Catalogue", "")    
+    Container(discover, "Discover", "")
+    Container(share, "Share", "")
+    Container(access, "Access", "") 
+    Container(learn, "Learn", "") 
+    SystemDb(catalog, "Data Catalogue", "")
+
+    Boundary(common, "Shared services") {
+      Container(logging, "Logging", "")
+      Container(monitoring, "Monitoring", "")
+      Container(reporting, "Reporting", "")  
+      Container(backup, "Backup & Recovery", "")     
+    }
+    catalog -[#hidden]- logging 
   }
 
   Rel_U(supplier, idp, "", $tags="dashed")
