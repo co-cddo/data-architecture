@@ -1,0 +1,39 @@
+name: rebase includes
+on: [push, pull_request]
+jobs:
+  build:
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: python ./.github/workflows/rebase-includes.py
+    - name: setup git config
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git config user.name "GitHub Actions Bot"
+        git config user.email "data-architecture-bot@users.noreply.github.com"
+    - name: check for changes
+      id: check_changes
+      run: |
+        git status
+        if [[ `git status --porcelain` ]]; then
+          echo "Files have been changed."
+          echo "::set-output name=has_changes::true"
+        else
+          echo "::set-output name=has_changes::false"
+        fi
+    - name: stage changed files
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: git add .
+    - name: commit changed files
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: git commit -m "Rebasing includes"
+    - name: fetch from main
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: git fetch origin main
+    - name: push code to main
+      if: steps.check_changes.outputs.has_changes == 'true'
+      run: git push origin HEAD:main
