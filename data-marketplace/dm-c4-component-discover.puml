@@ -1,0 +1,35 @@
+@startuml dm-c4-component-discover 
+!include <C4/C4_Component>
+
+LAYOUT_TOP_DOWN()
+LAYOUT_WITH_LEGEND()
+
+title C4 component diagram for Data Marketplace Discover service
+
+AddElementTag("record", $bgColor="LightGrey", $borderColor="White")
+
+Person(acquirer, "Acquirer", "")
+Person(supplier, "Supplier", "")
+
+System_Boundary(dm, "Data Marketplace") {
+  System_Boundary(discover, "Discover service") {
+    Component(publish, "Publish metadata sub-service")
+    Component(find, "Find metadata sub-service")
+  }
+  ComponentDb(CKAN,"Data catalogue","CKAN") {
+    Component(asset,"Data asset record", $tags="record") {
+    artifact "metadata" as metadata
+    artifact "restricted\nmetadata" as metadatar #orange
+    }
+
+    metadata - metadatar
+  }
+}
+supplier --> publish : Publishes metadata
+publish --> metadata
+publish --> metadatar
+
+acquirer --> find : Search for data asset metadata
+find --> metadata : Can see
+
+@enduml
