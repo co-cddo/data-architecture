@@ -1,0 +1,22 @@
+@startuml dm-c4-component-auth 
+!include <C4/C4_Component>
+
+Person(user, "User", "")
+
+System_Boundary(idp, "Identity Provider") {
+  ComponentDb(ldap,"Directory","") 
+  Component(auth, "Authorisation\nServer")
+}
+
+System_Boundary(dm, "Data Marketplace") {
+  Component(discover, "Discover")
+  Component(ac, "Access\ncontrol")
+}
+
+user -up-> auth : sign-in
+auth . ldap : verify
+
+user --> ac : present credentials
+ac . discover : grant access
+
+@enduml

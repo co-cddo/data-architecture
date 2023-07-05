@@ -1,0 +1,60 @@
+@startuml dm-sequence-auth 
+!theme C4_united from https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/themes
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+Person(user, "User")
+Component(dm, "Data Marketplace", "UI")
+Component(auth, "Authorisation\nServer", "OAuth2")
+Component(acc, "Access\nControl", "API")
+Component(discover, "Discover\nservice", "API")
+
+
+== Authenticate ==
+
+Rel(user, dm, "Click login link")
+activate dm
+Rel(dm, auth, "Authorisation code request")
+deactivate dm
+
+activate auth
+Rel(auth, user, "Redirect to autorisation prompt")
+deactivate auth
+
+Rel(user, auth, "Authenticate and consent")
+
+activate auth
+Rel(auth, dm, "Issue authisation code")
+deactivate auth
+
+activate dm
+Rel(dm, auth, "Request tokens (code + client ID + client secret)")
+deactivate dm
+
+activate auth
+Rel(auth, auth, "Validate identity")
+Rel(auth, dm, "Issue ID and access token")
+deactivate auth
+
+activate dm
+Rel(dm, acc, "Request access (access token + user id)")
+deactivate dm
+
+activate acc
+Rel(acc, acc, "Verify access request")
+
+Rel(acc, dm, "Initiate user session")
+deactivate acc
+
+activate dm
+Rel(dm, user, "Issue session cookie")
+
+== Authorise ==
+
+Rel(user, dm, "View data asset")
+
+Rel(dm, acc, "Request access to data asset (access token + user id + asset id)")
+activate acc
+Rel(acc, acc, "Evaluate access policy")
+Rel(acc, discover, "Access data asset")
+
+@enduml

@@ -16,7 +16,7 @@
 
   System_Boundary(dm, "Data Marketplace") {
   
-    Container(am, "Access management", "")
+    Container(am, "Access control", "")
     Container(discover, "Discover", "")
     Container(share, "Share", "")
     Container(access, "Access", "") 
