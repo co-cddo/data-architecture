@@ -36,10 +36,10 @@ System_Boundary(dm, "Data Marketplace") {
 }
 
 note as n1
-   <font:normal>3. Evaluate policy</font>
+   <font:arial>3. Evaluate policy</font>
 
    <color:blue>Scenario:</color> Owners can edit data assets
-   <color:blue>Given</color> I am a data acquirer
+   <color:blue>Given</color> I am a data supplier
    <color:blue>  And</color> I am the data asset owner
    <color:blue>When</color> I try to edit the data asset
    <color:blue>Then</color> I am allowed to edit the data asset
