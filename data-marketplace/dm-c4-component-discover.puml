@@ -12,24 +12,29 @@ Person(acquirer, "Acquirer", "")
 Person(supplier, "Supplier", "")
 
 System_Boundary(dm, "Data Marketplace") {
+  Component(access, "Access control", "ABAC")  
   System_Boundary(discover, "Discover service") {
-    Component(publish, "Publish metadata sub-service")
-    Component(find, "Find metadata sub-service")
+    Component(publish, "Publish metadata", "sub-service")
+    Component(find, "Find metadata", "sub-service")
   }
   ComponentDb(CKAN,"Data catalogue","CKAN") {
     Component(asset,"Data asset record", $tags="record") {
-    artifact "metadata" as metadata
-    artifact "restricted\nmetadata" as metadatar #orange
+    artifact "metadata" as metadata #orange
+    artifact "restricted\nmetadata" as metadatar
     }
 
     metadata - metadatar
   }
 }
-supplier --> publish : Publishes metadata
-publish --> metadata
-publish --> metadatar
+supplier --> access #green : <color:green>Publishes\l<color:green>metadata
+access --> publish #green : <color:green>Grant
+publish --> metadata #green
+publish --> metadatar #green
 
-acquirer --> find : Search for data asset metadata
-find --> metadata : Can see
+acquirer --> access #orange : <color:orange>Search for data asset metadata\l
+access --> find #orange : <color:orange>Grant
+find --> metadata #orange : <color:orange>Can see
 
+'layout
+supplier -[#hidden] acquirer
 @enduml

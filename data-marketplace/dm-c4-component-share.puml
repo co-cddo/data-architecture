@@ -1,0 +1,47 @@
+@startuml dm-c4-component-share
+!include <C4/C4_Component>
+
+LAYOUT_TOP_DOWN()
+LAYOUT_WITH_LEGEND()
+
+title C4 component diagram for Data Marketplace Share service
+
+AddElementTag("record", $bgColor="LightGrey", $borderColor="White")
+
+Person(acquirer, "Acquirer", "")
+Person(supplier, "Supplier", "")
+
+System_Boundary(dm, "Data Marketplace") {
+  Component(access, "Access control", "ABAC")
+  System_Boundary(share, "Share service") {
+    Component(submit, "Submit data share", "sub-service")
+    Component(manage, "Manage data share", "sub-service")
+    Component(collab, "Collaborate on data share", "sub-service")
+    ComponentDb(dsdb, "Data share storage", "database") {
+      Component(datashare,"Data share record", $tags="record")      
+    }  
+  }
+  ComponentDb(CKAN,"Data catalogue","CKAN") {
+    Component(asset,"Data asset record", $tags="record") 
+  }
+}
+
+supplier --> access #green : <color:green>Manage\l<color:green>data share
+access --> manage #green : <color:green>Grant
+manage --> datashare #green
+
+supplier --> access #blue : <color:blue>Collaborate on data share arrangements\l
+access --> collab #blue : <color:blue>Grant
+collab --> datashare #blue
+
+
+acquirer --> access #orange : <color:orange>Submit data share request\l
+access --> submit #orange : <color:orange>Grant
+submit --> datashare #orange
+
+'layout
+'supplier -[#hidden] acquirer
+
+datashare <.. asset : references
+
+@enduml
