@@ -1,6 +1,8 @@
 @startuml dm-c4-component-auth 
 !include <C4/C4_Component>
 
+title C4 component diagram for Data Marketplace authentication
+  
 Person(user, "User", "")
 
 System_Boundary(idp, "Identity Provider") {

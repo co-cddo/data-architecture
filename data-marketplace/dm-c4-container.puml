@@ -1,6 +1,7 @@
 @startuml dm-c4-container 
 !include <C4/C4_Container>
 !include <C4/C4_Component>
+'left to right direction
 
   title C4 Container diagram for Data Marketplace
   
@@ -21,7 +22,7 @@
     Container(share, "Share", "")
     Container(access, "Access", "") 
     Container(learn, "Learn", "") 
-    SystemDb(catalog, "Data Catalogue", "")
+    SystemDb(catalog, "Data\nCatalogue", "")
 
     Boundary(common, "Shared services") {
       Container(logging, "Logging", "")
@@ -30,6 +31,7 @@
       Container(backup, "Backup & Recovery", "")     
     }
     catalog -[#hidden]- logging 
+    'logging -[#hidden] backup
   }
 
   Rel_U(supplier, idp, "", $tags="dashed")
