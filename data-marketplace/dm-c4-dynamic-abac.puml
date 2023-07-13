@@ -8,6 +8,7 @@ note {
   BackgroundColor white
 }
 </style>
+left to right direction
 
 Person(user, "User")
 artifact "ID Token" as id {
@@ -28,8 +29,8 @@ System_Boundary(dm, "Data Marketplace") {
     json "attributes" as attr {
       "name": "Dataset X",
       "owner": "ll@depta.gov.uk",
-      "classification": "restricted",
-      "visibility": "published",
+      "classification": "OFFICIAL",
+      "visibility": "PUBLIC",
       "dept": "Dept A"
     }
   }

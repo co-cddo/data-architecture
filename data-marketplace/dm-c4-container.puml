@@ -11,7 +11,7 @@
   Person(supplier, "Supplier", "")
   Person(admin, "Admin", "")
 
-  Person_Ext(learner, "Learner", "")
+  Person_Ext(visitor, "Visitor", "")
 
   Container_Ext(idp, "Identity provider", "")
 
@@ -20,8 +20,8 @@
     Container(am, "Access control", "")
     Container(discover, "Discover", "")
     Container(share, "Share", "")
-    Container(access, "Access", "") 
-    Container(learn, "Learn", "") 
+    Container(deliver, "Deliver", "") 
+    Container(guide, "Guide", "") 
     SystemDb(catalog, "Data\nCatalogue", "")
 
     Boundary(common, "Shared services") {
@@ -41,16 +41,16 @@
   Rel(supplier, am, "")
   Rel(acquirer, am, "")
   Rel(admin, am, "")
-  Rel(learner, am, "")
+  Rel(visitor, am, "")
 
   Rel(am, discover, "")
   Rel(am, share, "")
-  Rel(am, access, "")
-  Rel(am, learn, "")
+  Rel(am, deliver, "")
+  Rel(am, guide, "")
 
   Rel(discover, catalog, "")
   Rel(share, catalog, "")
-  Rel(access, catalog, "", $tags="dashed")
+  Rel(deliver, catalog, "", $tags="dashed")
 
   LAYOUT_WITH_LEGEND()
 @enduml
