@@ -26,30 +26,45 @@ System_Boundary(dm, "Data Marketplace") {
   }
 
   artifact "Data Asset" as asset {
-    json "attributes" as attr {
+    json "metadata" as attr {
       "name": "Dataset X",
       "owner": "ll@depta.gov.uk",
       "classification": "OFFICIAL",
       "visibility": "PUBLIC",
-      "dept": "Dept A"
+      "dept": "Dept A",
+      "columns": [{
+            "titles": "colA",
+            "classification": "OFFICIAL"
+          },{
+            "titles": "colB",
+            "classification": "OFFICIAL-SENSITIVE"
+          }]
     }
   }
+
+  note as n2
+    4. Deny access  <font:arial><color:red>X
+  endnote
+
+  policy - n2
 }
 
 note as n1
    <font:arial>3. Evaluate policy</font>
 
-   <color:blue>Scenario:</color> Owners can edit data assets
-   <color:blue>Given</color> I am a data supplier
-   <color:blue>  And</color> I am the data asset owner
-   <color:blue>When</color> I try to edit the data asset
-   <color:blue>Then</color> I am allowed to edit the data asset
+   <color:blue>Scenario:</color> Acquirers can NOT see OFFICIAL-SENSITIVE metadata
+   <color:blue>Given</color> I am a data acquirer
+   <color:blue>  And</color> I am signed into the data marketplace
+   <color:blue>When</color> I view metadata about a data asset
+    <color:blue>  And</color> that metadata is classified OFFICIAL-SENSITIVE
+   <color:blue>Then</color> I am NOT able to view that metadata
 endnote
 
-user - id
-id --> policy : 1. Request 'edit' access\l    to 'Dataset X'
-policy <-- attr : 2. Query data\l    asset attributes
-policy - n1
-policy --> asset : 4. Grant access
+claims - user
+id --> policy : 1. Request 'read' access\l    to 'Dataset X'`\l    colB metadata\l
+policy <-- attr : 2. Query data\l    asset metadata \l    attributes\l
+n1 - policy
 
 @enduml
+
+

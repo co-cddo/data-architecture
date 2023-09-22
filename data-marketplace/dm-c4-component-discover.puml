@@ -1,10 +1,11 @@
 @startuml dm-c4-component-discover 
 !include <C4/C4_Component>
 
-LAYOUT_TOP_DOWN()
-LAYOUT_WITH_LEGEND()
+'LAYOUT_TOP_DOWN()
+'LAYOUT_WITH_LEGEND()
+left to right direction
 
-title C4 component diagram for Data Marketplace Discover service
+'title C4 component diagram for Data Marketplace Discover service
 
 AddElementTag("record", $bgColor="LightGrey", $borderColor="White")
 
@@ -20,7 +21,7 @@ System_Boundary(dm, "Data Marketplace") {
   ComponentDb(CKAN,"Data catalogue","CKAN") {
     Component(asset,"Data asset record", $tags="record") {
     artifact "metadata" as metadata #orange
-    artifact "restricted\nmetadata" as metadatar
+    artifact "OFFSEN\nmetadata" as metadatar
     }
 
     metadata - metadatar

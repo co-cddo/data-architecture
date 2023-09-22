@@ -3,9 +3,9 @@
 
 LAYOUT_TOP_DOWN()
 'LAYOUT_AS_SKETCH()
-LAYOUT_WITH_LEGEND()
-
-title C4 System context diagram for Data Marketplace
+'LAYOUT_WITH_LEGEND()
+left to right direction
+'title C4 System context diagram for Data Marketplace
 
 Enterprise_Boundary(cddo, "CDDO") {
   Person(admin, "Admin", "Data marketplace administrator")
@@ -47,6 +47,6 @@ supplierB -up-> dm : manually enters metadata about data assets and publishes th
 acquirerA -up-> dm : searches for data asset and makes data sharing request once satisfied the asset meets their requirements
 dm --> ownerB : receives and approves data sharing requests and begins data sharing process
 
-dm <- visitor : browses public guidance materials around data marketplace and data sharing
+dm <-up- visitor : browses public guidance materials around data marketplace and data sharing
 
 @enduml

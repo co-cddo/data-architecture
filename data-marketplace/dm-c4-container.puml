@@ -1,9 +1,9 @@
 @startuml dm-c4-container 
 !include <C4/C4_Container>
 !include <C4/C4_Component>
-'left to right direction
+left to right direction
 
-  title C4 Container diagram for Data Marketplace
+  'title C4 Container diagram for Data Marketplace
   
   AddRelTag("dashed", $lineStyle=DashedLine())
 
@@ -13,25 +13,27 @@
 
   Person_Ext(visitor, "Visitor", "")
 
-  Container_Ext(idp, "Identity provider", "")
+  Container_Ext(idp, "Identity\nprovider", "")
 
   System_Boundary(dm, "Data Marketplace") {
   
-    Container(am, "Access control", "")
+    Container(am, "Access\ncontrol", "")
     Container(discover, "Discover", "")
     Container(share, "Share", "")
     Container(deliver, "Deliver", "") 
     Container(guide, "Guide", "") 
     SystemDb(catalog, "Data\nCatalogue", "")
+    SystemQueue(workflow, "Workflow")
+    SystemDb(cms, "Content")
 
     Boundary(common, "Shared services") {
       Container(logging, "Logging", "")
       Container(monitoring, "Monitoring", "")
       Container(reporting, "Reporting", "")  
-      Container(backup, "Backup & Recovery", "")     
+      Container(backup, "Backup &\nRecovery", "")     
     }
     catalog -[#hidden]- logging 
-    'logging -[#hidden] backup
+    reporting -[#hidden] backup
   }
 
   Rel_U(supplier, idp, "", $tags="dashed")
@@ -51,6 +53,10 @@
   Rel(discover, catalog, "")
   Rel(share, catalog, "")
   Rel(deliver, catalog, "", $tags="dashed")
+  
+  Rel(share, workflow, "")
+  Rel_R(catalog, workflow, "")
 
-  LAYOUT_WITH_LEGEND()
+  Rel(guide, cms, "")
+  'LAYOUT_WITH_LEGEND()
 @enduml
