@@ -1,0 +1,89 @@
+@startuml dm-c4-container-deliver-api 
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+left to right direction
+
+  'title C4 Container diagram for Data Marketplace
+  
+  AddRelTag("dashed", $lineStyle=DashedLine())
+
+  'Person(acquirer, "Acquirer", "")
+  'Person(supplier, "Supplier", "")
+  'Person(admin, "Admin", "")
+
+  'Person_Ext(visitor, "Visitor", "")
+
+  'Container_Ext(idp, "Identity\nprovider", "")
+
+  System_Boundary(dm, "Data Marketplace") {
+  
+    'Container(am, "Access\ncontrol", "")
+    Container_Boundary(discover, "Discover") {
+      Container(publish, "Publish", "")
+      Container(find, "Find", "")
+    }
+    Container(share, "Share", "")
+    Container(deliver, "Deliver", "") 
+    Container(guide, "Guide", "") 
+    SystemDb(catalog, "Data\nCatalogue", "")
+    SystemQueue(workflow, "Workflow")
+    SystemDb(cms, "Content")
+
+    Container(linter, "API Validator", "")
+    'Boundary(common, "Shared services") {
+    '  Container(logging, "Logging", "")
+    '  Container(monitoring, "Monitoring", "")
+    '  Container(reporting, "Reporting", "")  
+    '  Container(backup, "Backup &\nRecovery", "")     
+    '}
+    'catalog -[#hidden]- logging 
+    'reporting -[#hidden] backup
+  }
+
+  System_Boundary(depA, "Dept A") {
+    Container_Ext(api1, "API 1")
+    Container_Ext(api2, "API 2")    
+  }
+
+  System_Boundary(depB, "Dept B") {
+    Container_Ext(api3, "API 3")
+    Container_Ext(api4, "API 4")  
+    Container_Ext(api5, "API 5")  
+    Container_Ext(apim, "API Management")
+    api3 -- apim
+    api4 -- apim
+    api5 -- apim         
+  }
+
+  'Rel_U(supplier, idp, "", $tags="dashed")
+  'Rel_U(acquirer, idp, "", $tags="dashed")
+  'Rel_U(admin, idp, "", $tags="dashed")
+  
+  'Rel(supplier, am, "")
+  'Rel(acquirer, am, "")
+  'Rel(admin, am, "")
+  'Rel(visitor, am, "")
+
+  'Rel(am, discover, "")
+  'Rel(am, share, "")
+  'Rel(am, deliver, "")
+  'Rel(am, guide, "")
+
+  Rel(linter, publish, "")
+
+  Rel(publish, catalog, "")
+  Rel(share, catalog, "")
+  Rel(deliver, catalog, "", $tags="dashed")
+  
+  Rel(share, workflow, "")
+  Rel_R(catalog, workflow, "")
+
+  Rel(guide, cms, "")
+  guide -[#hidden] discover
+
+  api1 ...> linter
+  api2 ...> linter
+
+  apim ..> linter
+  'LAYOUT_WITH_LEGEND()
+@enduml

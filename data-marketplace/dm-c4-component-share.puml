@@ -1,10 +1,11 @@
 @startuml dm-c4-component-share
 !include <C4/C4_Component>
 
-LAYOUT_TOP_DOWN()
-LAYOUT_WITH_LEGEND()
+'LAYOUT_TOP_DOWN()
+'LAYOUT_WITH_LEGEND()
 
-title C4 component diagram for Data Marketplace Share service
+'title C4 component diagram for Data Marketplace Share service
+left to right direction
 
 AddElementTag("record", $bgColor="LightGrey", $borderColor="White")
 
