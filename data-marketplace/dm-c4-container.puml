@@ -7,30 +7,30 @@ left to right direction
   
   AddRelTag("dashed", $lineStyle=DashedLine())
 
-  Person(acquirer, "Acquirer", "")
-  Person(supplier, "Supplier", "")
-  Person(admin, "Admin", "")
+  Person(acquirer, "Acquirer", "", $tags="mvp")
+  Person(supplier, "Supplier", "", $tags="mvp")
+  Person(admin, "Admin", "", $tags="tobe")
 
-  Person_Ext(visitor, "Visitor", "")
+  Person_Ext(visitor, "Visitor", "", $tags="tobe")
 
-  Container_Ext(idp, "Identity\nprovider", "")
+  Container_Ext(idp, "Identity\nprovider", "", $tags="mvp")
 
   System_Boundary(dm, "Data Marketplace") {
   
-    Container(am, "Access\ncontrol", "")
-    Container(discover, "Discover", "")
-    Container(share, "Share", "")
-    Container(deliver, "Deliver", "") 
-    Container(guide, "Guide", "") 
-    SystemDb(catalog, "Data\nCatalogue", "")
-    SystemQueue(workflow, "Workflow")
-    SystemDb(cms, "Content")
+    Container(am, "Access\ncontrol", "", $tags="tobe")
+    Container(discover, "Discover", "", $tags="mvp")
+    Container(share, "Share", "", $tags="mvp")
+    Container(deliver, "Deliver", "", $tags="tobe") 
+    Container(guide, "Guide", "", $tags="tobe") 
+    SystemDb(catalog, "Data\nCatalogue", "", $tags="mvp")
+    SystemQueue(workflow, "Workflow", $tags="tobe")
+    SystemDb(cms, "Content", $tags="tobe")
 
     Boundary(common, "Shared services") {
-      Container(logging, "Logging", "")
-      Container(monitoring, "Monitoring", "")
-      Container(reporting, "Reporting", "")  
-      Container(backup, "Backup &\nRecovery", "")     
+      Container(logging, "Logging", "", $tags="tobe")
+      Container(monitoring, "Monitoring", "", $tags="tobe")
+      Container(reporting, "Reporting", "", $tags="tobe")  
+      Container(backup, "Backup &\nRecovery", "", $tags="tobe")     
     }
     catalog -[#hidden]- logging 
     reporting -[#hidden] backup
@@ -58,5 +58,8 @@ left to right direction
   Rel_R(catalog, workflow, "")
 
   Rel(guide, cms, "")
-  'LAYOUT_WITH_LEGEND()
+
+  LAYOUT_WITH_LEGEND()
+  'HIDE_STEREOTYPE()
+
 @enduml
