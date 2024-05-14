@@ -1,0 +1,24 @@
+@startuml dm-c4-container-sso
+!include dm-c4-container.puml
+
+'title C4 Container diagram for Data Marketplace MVP
+  
+!$MVP_COLOR="#OrangeRed"
+!$TOBE_COLOR="#LightGrey"
+
+'AddElementTag("mvp", $bgColor="$MVP_COLOR", $borderColor="#DarkRed", $fontColor="white")
+'AddElementTag("mvp_ext", $bgColor="white", $borderColor="$MVP_COLOR", $fontColor="$MVP_COLOR")
+'AddElementTag("tobe", $bgColor="$TOBE_COLOR", $borderColor="white", $fontColor="white")
+
+Container(idp, "SSO", "", $tags="mvp")
+Container_Ext(aad, "Microsoft 365\nTenancy", "", $tags="mvp_ext")
+Container_Ext(gcp, "Google\nWorkspace", "", $tags="mvp_ext")
+Container_Ext(otp, "One Time\nPasscode", "", $tags="mvp_ext")
+
+aad ..> idp
+gcp ..> idp
+otp ..> idp
+
+hide stereotype
+
+@enduml

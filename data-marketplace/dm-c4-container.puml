@@ -59,7 +59,7 @@ left to right direction
 
   Rel(guide, cms, "")
 
-  LAYOUT_WITH_LEGEND()
+  'LAYOUT_WITH_LEGEND()
   'HIDE_STEREOTYPE()
 
 @enduml

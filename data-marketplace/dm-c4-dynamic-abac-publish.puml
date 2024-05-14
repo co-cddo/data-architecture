@@ -1,0 +1,69 @@
+@startuml dm-c4-dynamic-abac-publish
+!include <C4/C4_Dynamic>
+skinparam noteTextAlignment left
+<style>
+note {
+  MaximumWidth 500
+  FontName courier
+  BackgroundColor white
+}
+</style>
+'left to right direction
+
+Person(user, "User")
+artifact "ID Token" as id {
+  json claims {
+    "name":"Luna Li",
+    "email":"ll@depta.gov.uk",
+    "permissions": ["discover", "share", "**publish**"],
+    "dept":"**Dept A**"
+  }
+}
+
+System_Boundary(dm, "Data Marketplace") {
+
+
+  artifact "Data Asset" as asset {
+    json "metadata" as attr {
+      "name": "Dataset X",
+      "owner": "mm@deptb.gov.uk",
+      "visibility": "PUBLIC",
+      "dept": "**Dept B**"
+    }
+  }
+
+  note as n2
+    4. **Deny** access  <font:arial><color:red>X
+  endnote
+
+  Container_Boundary(acc, "Access control") {
+    Component(policy,"Policy Evaluator")
+  }
+}
+
+note as n1
+   <font:arial>3. Evaluate policy</font>
+
+   <color:blue>Scenario:</color><i>Metadata records can only be modified by users from the department that owns the metadata record
+   <color:blue>Given</color> I am a data supplier from **Dept A**
+   <color:blue>  And</color> I am signed into the data marketplace
+   <color:blue>  And</color> I have **publish** permissions   
+   <color:blue>When</color> I try to edit metadata about a data asset owned by **Dept B**
+   <color:blue>Then</color> I am **NOT** able to edit that metadata
+endnote
+
+'n1 - policy
+'claims - user
+'id -> policy : \l         1. Request\l             'publish'\l             access to\l             'Dataset X'`\l
+'policy <-- attr : 2. Query data\l    asset metadata \l    attributes\l
+'n2 -- policy
+
+user - claims
+claims -> policy:1. Request\l    'publish'\l    access to\l    'Dataset X'\l
+policy <- attr:\l   2. Query data\l       asset metadata \l       attributes\l
+n2 -- policy
+policy -- n1
+
+@enduml
+
+
