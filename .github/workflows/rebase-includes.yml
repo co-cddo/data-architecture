@@ -8,6 +8,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with: 
+        token: ${{ secrets.CO_DA_COMMIT }} 
     - name: Run a one-line script
       run: python ./.github/workflows/rebase-includes.py
     - name: setup git config
