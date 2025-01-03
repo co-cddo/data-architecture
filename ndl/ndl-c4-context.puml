@@ -1,0 +1,42 @@
+@startuml ndl-c4-context 
+!include <C4/C4_Context>
+
+title System Context Diagram
+
+left to right direction
+
+Boundary(service_layer, "Service Layer") {
+    System_Boundary(core_services, "NDL Core Services") {
+        System(discover_service, "Discover data", "(data catalogue - e.g. DM)")
+        System(share_service, "Share data", "(workflow system - e.g. DM)")
+        System(accreditarion_service, "Accreditation")
+        System(link_data_service, "Link data")
+        System(access_data_service, "Data access")
+    }
+}
+
+System_Boundary(data_layer, "Data layer") {
+    Enterprise_Boundary(provider, "Provider") {
+        System(provider_manage_data, "Manage data")
+        System(provider_share_data, "Share data")
+        System(provider_curate_data, "Curate data")
+        System(provider_control_data, "Control data")
+    }
+    Boundary(partners, "NDL partners") {
+        System(partner_manage_data, "Manage data")
+        System(partner_share_data, "Share data")
+        System(partner_curate_data, "Curate data")
+        System(partner_control_data, "Control data")
+    }
+    Enterprise_Boundary(consumer, "Consumer") {
+        System(consumer_control_data, "Control data")
+        System(consumer_use_data, "Use data")
+    }
+
+    Rel(provider, consumer, "Data")
+    Rel_L(provider, partners, "Data")
+    Rel(partners, consumer, "Data")
+
+}
+
+@enduml
