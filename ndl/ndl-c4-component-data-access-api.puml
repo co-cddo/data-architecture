@@ -1,0 +1,33 @@
+@startuml ndl-c4-component-data-access-api 
+!include <C4/C4_Component>
+
+title Component diagram for Data Access via point-to-point Data API 
+
+    Container_Boundary(provider, "Provider") {
+        Component(oas, "API Specification", "OAS 3.1")
+        Component(api, "Data API", "Data API")
+        oas<-api:publishes
+    }
+
+    Container_Boundary(consumer1, "Consumer 1") {
+        Component(apiclient1, "API client")
+    }
+
+    Container_Boundary(consumer2, "Consumer 2") {
+        Component(apiclient2, "API client")
+    }
+
+    Container_Boundary(consumer3, "Consumer 3") {
+        Component(apiclient3, "API client")
+    }
+
+    api-[#black]->apiclient1
+    api-[#black]->apiclient2
+    api-[#black]->apiclient3
+
+    HIDE_STEREOTYPE()
+    
+@enduml
+
+
+

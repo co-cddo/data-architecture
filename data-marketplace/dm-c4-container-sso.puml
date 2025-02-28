@@ -1,5 +1,5 @@
 @startuml dm-c4-container-sso
-!include https://raw.githubusercontent.com/co-cddo/data-architecture/main/data-marketplace/dm-c4-container.puml
+!include dm-c4-container.puml
 
 'title C4 Container diagram for Data Marketplace MVP
   
